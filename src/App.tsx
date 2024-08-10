@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import CustomerList from './components/CustomerList/CustomerList';
+import CustomerDetails from './components/CustomerDetails/CustomerDetails';
 import './App.css';
 
-function App() {
+
+interface Customer {
+  id: number;
+  name: string;
+  title: string;
+  address: string;
+}
+
+const App: React.FC = () => {
+  const [customers, setCustomers] = useState<Customer[]>([
+    { id: 1, name: 'Customer 01', title: 'Full Stack Developer with B.Tech Degree in Information technology', address: 'Address 01 satna india' },
+    { id: 2, name: 'Customer 02', title: 'Software Developer with B.Tech Degree in Information technology', address: 'Address 02  india' },
+    { id: 3, name: 'Customer 03', title: 'Frontend Developer with B.Tech Degree in Information technology', address: 'Address 03 chitrakoot india' },
+    { id: 4, name: 'Customer 04', title: 'Backend Developer with B.Tech Degree in Information technology', address: 'Address 04 rewa india' },
+    { id: 5, name: 'Customer 05', title: 'Testing Developer with B.Tech Degree in Information technology', address: 'Address 05 noida india' },
+    { id: 6, name: 'Customer 06', title: 'AI Developer with B.Tech Degree in Information technology', address: 'Address 06 delhi india' },
+    { id: 7, name: 'Customer 07', title: 'Java with B.Tech Degree in Information technology', address: 'Address 01 satna india ward no. 17' },
+
+
+    // Add more customers here
+  ]);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<number>(1);
+
+  const selectedCustomer = customers.find((customer) => customer.id === selectedCustomerId) || null;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <CustomerList customers={customers} selectedCustomerId={selectedCustomerId} onSelectCustomer={setSelectedCustomerId} />
+      <CustomerDetails customer={selectedCustomer} />
     </div>
   );
-}
+};
 
 export default App;
